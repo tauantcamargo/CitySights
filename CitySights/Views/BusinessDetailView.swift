@@ -73,28 +73,36 @@ struct BusinessDetailView: View {
                     Divider()
                         .padding(.top, 12)
                     
-                    HStack {
-                        Image(systemName: "phone")
-                        Text(business?.displayPhone ?? "")
-                        Spacer()
-                        Image(systemName: "arrow.right")
-                    }
-                    .padding(.top, 12)
-                    
-                    Divider()
+                    if let url = URL(string: "tel:\(business?.phone ?? "")") {
+                        HStack {
+                            Image(systemName: "phone")
+                            Link(destination: url) {
+                                Text(business?.phone ?? "")
+                            }
+                            Spacer()
+                            Image(systemName: "arrow.right")
+                        }
                         .padding(.top, 12)
-                    
-                    HStack {
-                        Image(systemName: "globe")
-                        Text(business?.url ?? "")
-                            .lineLimit(1)
-                        Spacer()
-                        Image(systemName: "arrow.right")
+                        
+                        Divider()
+                            .padding(.top, 12)
                     }
-                    .padding(.top, 12)
                     
-                    Divider()
+                    
+                    if let url = URL(string: business?.url ?? "") {
+                        HStack {
+                            Image(systemName: "globe")
+                            Link(destination: url) {
+                                Text("Website link")
+                            }
+                            Spacer()
+                            Image(systemName: "arrow.right")
+                        }
                         .padding(.top, 12)
+                        
+                        Divider()
+                            .padding(.top, 12)
+                    }
                     
                     HStack {
                         Image(systemName: "bubble.left.and.bubble.right")

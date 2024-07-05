@@ -23,7 +23,7 @@ struct CitySightsApp: App {
                         .environment(businessViewModel)
                 }
                 .onAppear {
-                    if needsOnboarding == false {
+                    if needsOnboarding == false && businessViewModel.locationAuthStatus == .notDetermined {
                         businessViewModel.getUserLocation()
                     }
                 }

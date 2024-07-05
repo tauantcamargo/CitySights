@@ -77,7 +77,23 @@ struct HomeView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             
-            if selectedTab == 1 {
+            if businessViewModel.locationAuthStatus == .denied {
+                
+                VStack {
+                    Spacer()
+                    Text("Please allow location service for this app to see sights near you!")
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        Button {
+                            UIApplication.shared.open(url)
+                        } label: {
+                            Text("Open app settings")
+                        }
+                    }
+                   
+                    Spacer()
+                }
+            }
+            else if selectedTab == 1 {
                 MapView()
                     .onTapGesture {
                         withAnimation {
@@ -94,9 +110,6 @@ struct HomeView: View {
                         }
                     }
             }
-        }
-        .onAppear {
-            businessViewModel.getBusinesses(query: nil, options: nil, category: nil)
         }
         .sheet(item: $businessViewModel.businessSelected) { item in
             BusinessDetailView()
